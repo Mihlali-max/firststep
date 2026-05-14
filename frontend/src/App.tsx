@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import Home from './components/pages/Home'
 import { Login, Register } from './components/pages/Auth'
+import Coach from './components/pages/Coach'
 import Learnerships from './components/pages/Learnerships'
 import CVBuilder from './components/pages/CVBuilder'
 import CVUpload from './components/pages/CVUpload'
@@ -25,7 +26,7 @@ export default function App() {
           <Route path="/cv" element={<CVBuilder />} />
           <Route path="/cv/upload" element={<CVUpload />} />
           <Route path="/learnerships" element={<Learnerships />} />
-          <Route path="/coach" element={<Soon title="AI Coach" />} />
+          <Route path="/coach" element={<Coach />} />
           <Route path="/contact" element={<Soon title="Contact" />} />
         </Route>
         <Route path="/login" element={<Login />} />

@@ -30,3 +30,7 @@ async def chat(body: ChatRequest, user: User = Depends(get_current_user), db: As
     session.messages = history[-20:]
     await db.commit()
     return ChatResponse(reply=reply, session_id=str(session.id))
+
+@router.get("/sessions")
+async def get_sessions(user=Depends(get_current_user)):
+    return []
