@@ -46,3 +46,24 @@ async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)):
 @router.get("/me", response_model=UserResponse)
 async def get_me(user: User = Depends(get_current_user)):
     return UserResponse.model_validate(user)
+
+from pydantic import BaseModel as PM
+
+class RefreshBody(PM):
+    refresh_token: str
+
+@router.post("/auth/refresh")
+async def refresh_token(body: RefreshBody, db: AsyncSession = Depends(get_db)):
+    from app.core.security import decode_token
+    payload = decode_token(body.refresh_token)
+    if not payload or payload.get("type") != "refresh":
+        raise HTTPException(status_code=401, detail="Invalid refresh token")
+    user_id = payload.get("sub")
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+    return {
+        "access_token": create_access_token({"sub": user.id}),
+        "refresh_token": create_refresh_token({"sub": user.id}),
+    }
