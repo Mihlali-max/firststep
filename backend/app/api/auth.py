@@ -3,7 +3,9 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from app.core.database import get_db
+from app.core.security import hash_password
 from app.core.security import hash_password, verify_password, create_access_token, create_refresh_token, decode_token, verify_totp
+from app.services.email_service import send_welcome_email
 from app.models.user import User, CV
 from app.schemas.user import RegisterRequest, LoginRequest, TokenResponse, RefreshRequest, UserResponse
 
@@ -30,6 +32,9 @@ async def register(body: RegisterRequest, db: AsyncSession = Depends(get_db)):
     db.add(CV(user_id=user.id))
     await db.commit()
     await db.refresh(user)
+    try:
+        send_welcome_email(user.email, user.full_name)
+    except: pass
     return TokenResponse(access_token=create_access_token({"sub": user.id}), refresh_token=create_refresh_token({"sub": user.id}), user=UserResponse.model_validate(user))
 
 @router.post("/login", response_model=TokenResponse)
@@ -41,6 +46,9 @@ async def login(body: LoginRequest, db: AsyncSession = Depends(get_db)):
     if user.totp_enabled:
         if not body.totp_code or not verify_totp(user.totp_secret, body.totp_code):
             raise HTTPException(status_code=401, detail="Invalid or missing 2FA code")
+    try:
+        send_welcome_email(user.email, user.full_name)
+    except: pass
     return TokenResponse(access_token=create_access_token({"sub": user.id}), refresh_token=create_refresh_token({"sub": user.id}), user=UserResponse.model_validate(user))
 
 @router.get("/me", response_model=UserResponse)

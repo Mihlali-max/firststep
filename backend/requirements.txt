@@ -19,3 +19,4 @@ prometheus-fastapi-instrumentator==7.0.0
 aiosqlite==0.20.0
 email-validator
 email-validator
+resend
