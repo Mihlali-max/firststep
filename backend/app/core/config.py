@@ -5,7 +5,7 @@ import json
 class Settings(BaseSettings):
     APP_ENV: str = "development"
     FRONTEND_URL: str = "http://localhost:5173"
-    CORS_ORIGINS: str = '["http://localhost:5173"]'
+    CORS_ORIGINS: str = '["*"]'
     DATABASE_URL: str = "sqlite+aiosqlite:///./firststep.db"
     SECRET_KEY: str = "dev-secret-change-in-production"
     ALGORITHM: str = "HS256"
