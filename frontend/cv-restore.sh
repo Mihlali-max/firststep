@@ -1,3 +1,9 @@
+#!/bin/bash
+set -e
+cd ~/firststep/frontend
+echo "🔧 Restoring CVBuilder..."
+
+cat > src/components/pages/CVBuilder.tsx << 'TSX'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Check, ChevronRight, ChevronLeft, Download, Plus, X, Loader2, Eye, Settings, Camera, Palette } from 'lucide-react'
@@ -621,13 +627,13 @@ export default function CVBuilder() {
               {step===0&&(
                 <div>
                   <h2 className="font-display text-xl md:text-2xl font-bold text-[#1A1A0F] mb-1">Choose your template</h2>
-                  <p className="text-black/40 text-sm mb-6">5 professional designs — pick one that suits you.</p>
+                  <p className="text-black/40 text-sm mb-6">5 professional designs — each one fully filled so you see exactly what your CV will look like.</p>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-7">
                     {TEMPLATES.map(t=>(
                       <TemplateCard key={t.id} id={t.id} name={t.name} desc={t.desc} color={opts.color} selected={opts.template===t.id} onSelect={()=>setOpt('template',t.id)}/>
                     ))}
                   </div>
-                  <div>
+                  <div className="mb-7">
                     <h3 className="font-bold text-sm text-[#1A1A0F] mb-3">Accent colour</h3>
                     <div className="flex gap-3 flex-wrap">
                       {ACCENT_COLORS.map(c=>(
@@ -635,7 +641,7 @@ export default function CVBuilder() {
                       ))}
                     </div>
                   </div>
-                  <div className="mt-7 pt-6 border-t border-black/8">
+                  <div className="border-t border-black/8 pt-6">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="h-px flex-1 bg-black/8"/>
                       <span className="text-xs font-semibold text-black/30 uppercase tracking-widest">Or design with</span>
@@ -899,3 +905,6 @@ export default function CVBuilder() {
     </div>
   )
 }
+TSX
+
+echo "✅ CVBuilder restored!"
