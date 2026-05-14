@@ -1,3 +1,4 @@
+import os
 from fastapi import APIRouter, Depends, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -56,3 +57,20 @@ async def send_test_email(
 async def send_welcome(user: User = Depends(get_current_user)):
     success = send_welcome_email(user.email, user.full_name)
     return {"success": success}
+
+@router.post("/send-daily-alerts")
+async def trigger_daily_alerts(
+    secret: str = "",
+    db: AsyncSession = Depends(get_db),
+):
+    """Trigger daily alerts — called by Render cron job."""
+    # Simple secret check to prevent abuse
+    if secret != os.getenv("CRON_SECRET", "firststep-cron-2026"):
+        from fastapi import HTTPException
+        raise HTTPException(status_code=403, detail="Forbidden")
+    
+    import asyncio
+    from app.jobs.daily_alerts import run_daily_alerts
+    # Run in background
+    asyncio.create_task(run_daily_alerts())
+    return {"message": "Daily alerts triggered"}
