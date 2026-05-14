@@ -1,3 +1,41 @@
+#!/bin/bash
+set -e
+cd ~/firststep/frontend
+echo "📝 Updating frontend files..."
+
+# Tailwind config
+cat > tailwind.config.js << 'EOF'
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        amber: { DEFAULT: '#F5A623', dark: '#C47D0A', pale: '#FFF6E3' },
+        forest: { DEFAULT: '#2A5C3F', light: '#3A7A54' },
+        ink: { DEFAULT: '#1A1A0F', mid: '#2E2E1F' },
+        warm: '#FFFDF7',
+        offwhite: '#F7F3EB',
+        muted: '#7A7260',
+      },
+      fontFamily: {
+        display: ['Fraunces', 'Georgia', 'serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+}
+EOF
+
+# Install clsx if not present
+npm install clsx react-router-dom lucide-react 2>/dev/null || true
+
+# Create directories
+mkdir -p src/components/{layout,pages,ui} src/hooks src/lib src/store
+
+# index.css
+cat > src/index.css << 'EOF'
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
 @tailwind base;
 @tailwind components;
@@ -18,3 +56,6 @@
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: none; }
 #scroll-bar { position: fixed; top: 68px; left: 0; height: 2px; background: #F5A623; z-index: 300; width: 0%; transition: width .1s linear; box-shadow: 0 0 10px rgba(245,166,35,0.7); }
+EOF
+
+echo "✅ Base files done. Now copying components..."

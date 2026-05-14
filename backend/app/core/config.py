@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     GROQ_MODEL: str = "llama-3.1-70b-versatile"
     ELEVENLABS_API_KEY: str = ""
     ELEVENLABS_VOICE_ID: str = ""
+    ANTHROPIC_API_KEY: str = ""
+    ADZUNA_APP_ID: str = ""
+    ADZUNA_APP_KEY: str = ""
+    ADZUNA_APP_ID: str = ""
+    ADZUNA_APP_KEY: str = ""
 
     @property
     def cors_origins_list(self) -> List[str]:

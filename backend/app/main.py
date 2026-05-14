@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import engine, Base
 from app.api import auth, cv, coach
+from app.api.jobs import router as jobs_router
+from app.api import cv_extract
 from contextlib import asynccontextmanager
 
 @asynccontextmanager
@@ -18,6 +20,8 @@ app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origins_list, all
 app.include_router(auth.router, prefix="/api")
 app.include_router(cv.router, prefix="/api")
 app.include_router(coach.router, prefix="/api")
+app.include_router(cv_extract.router, prefix="/api")
+app.include_router(jobs_router, prefix="/api")
 
 @app.get("/health")
 async def health():
