@@ -69,7 +69,7 @@ export default function Home() {
           <h1 className="font-display font-bold leading-[1.05] tracking-tight text-[#FFFDF7] mb-5"
             style={{ fontSize: 'clamp(2.8rem,5vw,4.6rem)' }}>
             <span style={{ display:'block', animation:'wordslide .8s cubic-bezier(.16,1,.3,1) .35s both' }}>Your first job</span>
-            <span style={{ display:'block', paddingLeft:'3rem', animation:'wordslide .8s cubic-bezier(.16,1,.3,1) .5s both' }}>
+            <span style={{ display:'block', animation:'wordslide .8s cubic-bezier(.16,1,.3,1) .5s both' }}>
               starts{' '}
               <em className="not-italic text-[#F5A623]" style={{
                 fontSize: '0.75em', display: 'inline-block',
