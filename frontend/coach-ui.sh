@@ -1,3 +1,9 @@
+#!/bin/bash
+set -e
+cd ~/firststep/frontend
+echo "🎨 Redesigning AI Coach UI..."
+
+cat > src/components/pages/Coach.tsx << 'EOF'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Send, Bot, User, Loader2, Plus, Sparkles, ChevronDown, X } from 'lucide-react'
@@ -44,7 +50,7 @@ function MessageBubble({ msg, isNew }:{ msg:Message; isNew?:boolean }) {
           ? <User size={14} className="text-white/70"/>
           : <Bot size={14} className="text-white"/>}
       </div>
-      <div className={clsx('max-w-[85%] md:max-w-[75%] px-4 py-3.5 rounded-2xl text-sm leading-relaxed shadow-sm',
+      <div className={clsx('max-w-[78%] px-4 py-3.5 rounded-2xl text-sm leading-relaxed shadow-sm',
         isUser
           ? 'text-white rounded-br-sm border border-white/10'
           : 'text-white/90 rounded-bl-sm border border-white/8',
@@ -100,7 +106,7 @@ export default function Coach() {
   const firstName = user?.full_name?.split(' ')[0] || 'there'
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-68px)]" style={{background:'#0F0F0A'}}>
+    <div className="flex flex-col h-[calc(100vh-68px)]" style={{background:'#0F0F0A'}}>
 
       {/* ── TOP BAR ── */}
       <div className="flex items-center justify-between px-4 md:px-8 py-4 border-b flex-shrink-0" style={{borderColor:'rgba(255,255,255,0.08)',background:'#141410'}}>
@@ -130,7 +136,7 @@ export default function Coach() {
           {messages.length === 0 ? (
             /* Empty state */
             <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-3xl flex items-center justify-center mb-5 shadow-[0_8px_32px_rgba(245,166,35,0.25)]" style={{background:'linear-gradient(135deg,#F5A623,#C47D0A)'}}>
+              <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-6 shadow-[0_8px_32px_rgba(245,166,35,0.25)]" style={{background:'linear-gradient(135deg,#F5A623,#C47D0A)'}}>
                 <Sparkles size={36} className="text-white"/>
               </div>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-white mb-2">
@@ -197,3 +203,7 @@ export default function Coach() {
     </div>
   )
 }
+EOF
+
+echo "✅ Coach UI redesigned!"
+npm run dev
