@@ -43,7 +43,7 @@ export function Login() {
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setError('')
     const fd = new FormData(e.currentTarget)
-    try { await login(fd.get('email') as string, fd.get('password') as string); navigate('/') }
+    try { await login(fd.get('email') as string, fd.get('password') as string); navigate(sessionStorage.getItem('redirectAfter') || '/') }
     catch (err: any) { setError(err?.response?.data?.detail || 'Invalid email or password') }
   }
   return (
@@ -75,7 +75,7 @@ export function Register() {
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setError('')
     const fd = new FormData(e.currentTarget)
-    try { await register({ full_name: fd.get('full_name'), email: fd.get('email'), password: fd.get('password'), province: fd.get('province') || undefined, city: fd.get('city') || undefined }); navigate('/') }
+    try { await register({ full_name: fd.get('full_name'), email: fd.get('email'), password: fd.get('password'), province: fd.get('province') || undefined, city: fd.get('city') || undefined }); navigate(sessionStorage.getItem('redirectAfter') || '/') }
     catch (err: any) { setError(err?.response?.data?.detail || 'Something went wrong') }
   }
   return (

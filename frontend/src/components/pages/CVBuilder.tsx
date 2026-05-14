@@ -542,7 +542,7 @@ export default function CVBuilder() {
   const [showOpts, setShowOpts] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => { if (!user) navigate('/register') }, [user])
+  useEffect(() => { if (!user) { sessionStorage.setItem('redirectAfter', '/cv'); navigate('/register') } }, [user])
   useEffect(() => {
     api.get('/cv').then(res => {
       const d = res.data
