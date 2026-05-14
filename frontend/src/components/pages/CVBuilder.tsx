@@ -797,7 +797,15 @@ export default function CVBuilder() {
                       <div className="text-2xl mb-1.5">🎉</div>
                       <h3 className="font-display text-lg font-bold text-[#1A1A0F] mb-1">Your CV is ready!</h3>
                       <p className="text-sm text-black/45 mb-4">Download your professional CV as a PDF.</p>
-                      <a href="/api/cv/download" target="_blank" className="btn-amber inline-flex items-center gap-2 !py-2.5 !px-5 text-sm"><Download size={14}/> Download CV (PDF)</a>
+                      <button onClick={async()=>{
+                        try {
+                          const res = await api.get('/cv/download', {responseType:'blob'})
+                          const url = URL.createObjectURL(new Blob([res.data],{type:'application/pdf'}))
+                          const a = document.createElement('a'); a.href=url
+                          a.download=`${cv.pi.name||'My_CV'}_CV.pdf`; a.click()
+                          URL.revokeObjectURL(url)
+                        } catch(e){ alert('Download failed. Please try again.') }
+                      }} className="btn-amber inline-flex items-center gap-2 !py-2.5 !px-5 text-sm"><Download size={14}/> Download CV (PDF)</button>
                     </div>
                   )}
                 </div>
