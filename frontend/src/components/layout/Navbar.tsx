@@ -63,6 +63,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-2">
           {user ? (
             <>
+              <a href="/dashboard" className="text-sm font-medium text-black/50 hover:text-[#F5A623] transition-colors mr-2">Dashboard</a>
               <a href="/profile" className="text-sm font-medium text-[#7A7260] hover:text-[#F5A623] transition-colors mr-1">Hi, {user.full_name.split(' ')[0]}</a>
               <button onClick={() => { logout(); nav('/') }} className="text-sm text-[#7A7260] hover:text-[#1A1A0F] px-3 py-2 rounded-lg hover:bg-[#F7F3EB] transition-colors">Log out</button>
             </>

@@ -4,6 +4,7 @@ import Home from './components/pages/Home'
 import { Login, Register } from './components/pages/Auth'
 import LAP from './components/pages/LAP'
 import Profile from './components/pages/Profile'
+import Dashboard from './components/pages/Dashboard'
 import Coach from './components/pages/Coach'
 import Learnerships from './components/pages/Learnerships'
 import CVBuilder from './components/pages/CVBuilder'
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/lap" element={<LAP />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/cv" element={<CVBuilder />} />
           <Route path="/cv/upload" element={<CVUpload />} />
           <Route path="/learnerships" element={<Learnerships />} />
