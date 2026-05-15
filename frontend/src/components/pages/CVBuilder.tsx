@@ -567,7 +567,7 @@ export default function CVBuilder() {
     setSaving(true)
     try {
       await api.patch('/cv', {
-        personal_info: cv.pi,
+        personal_info: { ...cv.pi, template: opts.template, color: opts.color },
         education: cv.edu.filter(e=>e.school),
         skills: cv.skills,
         experience: cv.exp.filter(e=>e.title).map(e=>({ title:e.title, organisation:e.org, start_date:e.start, end_date:e.end, description:e.bullets, is_volunteer:e.volunteer })),

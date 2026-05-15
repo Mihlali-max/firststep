@@ -1,3 +1,8 @@
+#!/bin/bash
+echo "🎨 Fixing CV PDF to match templates..."
+
+# First update the PDF service with multi-template support
+cat > backend/app/services/pdf_service.py << 'PYEOF'
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.units import mm
@@ -301,3 +306,8 @@ def generate_cv_pdf(cv_data: dict) -> bytes:
 
     c.save()
     return buf.getvalue()
+PYEOF
+
+echo "✅ PDF service updated!"
+echo ""
+echo "Now update the frontend to save template + color to personal_info..."
