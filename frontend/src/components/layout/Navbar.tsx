@@ -88,9 +88,26 @@ export default function Navbar() {
             {l.label}
           </Link>
         ))}
+        {user && (
+          <>
+            <Link to="/dashboard" onClick={() => setOpen(false)}
+              className={clsx('text-base px-4 py-3 rounded-xl transition-colors', loc.pathname === '/dashboard' ? 'bg-[#F5A623]/10 text-[#C47D0A] font-medium' : 'text-[#1A1A0F] hover:bg-[#F7F3EB]')}>
+              Dashboard
+            </Link>
+            <Link to="/profile" onClick={() => setOpen(false)}
+              className={clsx('text-base px-4 py-3 rounded-xl transition-colors', loc.pathname === '/profile' ? 'bg-[#F5A623]/10 text-[#C47D0A] font-medium' : 'text-[#1A1A0F] hover:bg-[#F7F3EB]')}>
+              My Profile
+            </Link>
+          </>
+        )}
         <div className="flex gap-3 mt-3 pt-3 border-t border-[#1A1A0F]/10">
-          <Link to="/login" onClick={() => setOpen(false)} className="flex-1 text-center border border-[#1A1A0F]/15 text-[#1A1A0F] py-2.5 rounded-xl text-sm font-medium">Log in</Link>
-          <Link to="/register" onClick={() => setOpen(false)} className="flex-1 btn-amber text-center text-sm !py-2.5 flex items-center justify-center">Get started</Link>
+          {user
+            ? <button onClick={() => { logout(); setOpen(false); }} className="flex-1 text-center border border-red-200 text-red-500 py-2.5 rounded-xl text-sm font-medium">Log out</button>
+            : <>
+                <Link to="/login" onClick={() => setOpen(false)} className="flex-1 text-center border border-[#1A1A0F]/15 text-[#1A1A0F] py-2.5 rounded-xl text-sm font-medium">Log in</Link>
+                <Link to="/register" onClick={() => setOpen(false)} className="flex-1 btn-amber text-center text-sm !py-2.5 flex items-center justify-center">Get started</Link>
+              </>
+          }
         </div>
       </div>
     </>
