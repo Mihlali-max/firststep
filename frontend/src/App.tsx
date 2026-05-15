@@ -12,6 +12,8 @@ import Learnerships from './components/pages/Learnerships'
 import CVBuilder from './components/pages/CVBuilder'
 import CVUpload from './components/pages/CVUpload'
 import About from './components/pages/About'
+import Privacy from './components/pages/Privacy'
+import Terms from './components/pages/Terms'
 import { useAuthStore } from './store/authStore'
 
 function OnboardingModal({ onClose }: { onClose: () => void }) {
@@ -71,6 +73,8 @@ export default function App() {
           <Route path="/coach" element={<Coach />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
