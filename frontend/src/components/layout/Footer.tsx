@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 const COLS = [
   { title: 'Platform', links: [['CV Builder','/cv'],['AI Coach','/coach'],['Learnerships','/learnerships'],['LAP Programmes','/lap']] },
-  { title: 'Company', links: [['About us','/contact'],['Contact','/contact'],['Partners','/contact']] },
+  { title: 'Company', links: [['About us','/about'],['Contact','/contact'],['Partners','/about#partners']] },
   { title: 'Legal', links: [['Privacy Policy','/privacy'],['Terms of Use','/terms']] },
 ]
 export default function Footer() {
