@@ -81,7 +81,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      <div className={clsx('fixed top-[68px] left-0 right-0 bg-[#FFFDF7]/98 backdrop-blur-xl border-b border-[#1A1A0F]/10 z-40 flex flex-col gap-1 px-5 transition-all duration-300 overflow-hidden', open ? 'max-h-screen py-4 opacity-100' : 'max-h-0 py-0 opacity-0')}>
+      <div className={clsx('fixed top-[68px] left-0 right-0 bg-[#FFFDF7] border-b border-[#1A1A0F]/10 z-40 flex flex-col gap-1 px-5 transition-all duration-300 overflow-hidden', open ? 'max-h-screen py-4 opacity-100' : 'max-h-0 py-0 opacity-0')}>
         {LINKS.map(l => (
           <Link key={l.to} to={l.to} onClick={() => setOpen(false)}
             className={clsx('text-base px-4 py-3 rounded-xl transition-colors', loc.pathname === l.to ? 'bg-[#F5A623]/10 text-[#C47D0A] font-medium' : 'text-[#1A1A0F] hover:bg-[#F7F3EB]')}>
