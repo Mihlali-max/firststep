@@ -74,3 +74,78 @@ async def trigger_daily_alerts(
     # Run in background
     asyncio.create_task(run_daily_alerts())
     return {"message": "Daily alerts triggered"}
+
+from pydantic import BaseModel as PM
+class ContactForm(PM):
+    name: str
+    email: str
+    subject: str = ""
+    message: str
+
+@router.post("/contact")
+async def contact_form(form: ContactForm):
+    import resend, os
+    from dotenv import load_dotenv; load_dotenv()
+    resend.api_key = os.getenv("RESEND_API_KEY","")
+    try:
+        from resend import Emails
+        Emails.send({
+            "from": "FirstStep <onboarding@resend.dev>",
+            "to": "momozamihlali@gmail.com",
+            "subject": f"[FirstStep] {form.subject or 'New message'} from {form.name}",
+            "html": f"<p><b>From:</b> {form.name} ({form.email})</p><p><b>Message:</b></p><p>{form.message}</p>",
+        })
+        return {"success": True}
+    except Exception as e:
+        print(f"Contact error: {e}")
+        return {"success": False}
+
+from pydantic import BaseModel as PM
+class ContactForm(PM):
+    name: str
+    email: str
+    subject: str = ""
+    message: str
+
+@router.post("/contact")
+async def contact_form(form: ContactForm):
+    import resend, os
+    from dotenv import load_dotenv; load_dotenv()
+    resend.api_key = os.getenv("RESEND_API_KEY","")
+    try:
+        from resend import Emails
+        Emails.send({
+            "from": "FirstStep <onboarding@resend.dev>",
+            "to": "momozamihlali@gmail.com",
+            "subject": f"[FirstStep] {form.subject or 'New message'} from {form.name}",
+            "html": f"<p><b>From:</b> {form.name} ({form.email})</p><p><b>Message:</b></p><p>{form.message}</p>",
+        })
+        return {"success": True}
+    except Exception as e:
+        print(f"Contact error: {e}")
+        return {"success": False}
+
+from pydantic import BaseModel as PM
+class ContactForm(PM):
+    name: str
+    email: str
+    subject: str = ""
+    message: str
+
+@router.post("/contact")
+async def contact_form(form: ContactForm):
+    import resend, os
+    from dotenv import load_dotenv; load_dotenv()
+    resend.api_key = os.getenv("RESEND_API_KEY","")
+    try:
+        from resend import Emails
+        Emails.send({
+            "from": "FirstStep <onboarding@resend.dev>",
+            "to": "momozamihlali@gmail.com",
+            "subject": f"[FirstStep] {form.subject or 'New message'} from {form.name}",
+            "html": f"<p><b>From:</b> {form.name} ({form.email})</p><p><b>Message:</b></p><p>{form.message}</p>",
+        })
+        return {"success": True}
+    except Exception as e:
+        print(f"Contact error: {e}")
+        return {"success": False}
