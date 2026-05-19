@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, ArrowRight, Loader2 } from 'lucide-react'
+import { GoogleLogin } from '@react-oauth/google'
 import { useAuthStore } from '../../store/authStore'
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
