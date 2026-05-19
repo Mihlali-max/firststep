@@ -542,7 +542,7 @@ export default function CVBuilder() {
   const [showOpts, setShowOpts] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => { if (!user) { sessionStorage.setItem('redirectAfter', '/cv'); navigate('/register') } }, [user])
+  // Guest allowed — no redirect
   useEffect(() => {
     api.get('/cv').then(res => {
       const d = res.data
@@ -557,6 +557,12 @@ export default function CVBuilder() {
   }, [])
 
   const setOpt = (k:keyof Opts, v:any) => setOpts(o=>({...o,[k]:v}))
+  const GuestBanner = () => !user ? (
+    <div className="bg-[#F5A623]/10 border border-[#F5A623]/30 rounded-xl px-4 py-3 mb-4 flex items-center justify-between gap-3 flex-wrap">
+      <span className="text-sm text-[#1A1A0F]/70">Create a free account to save your CV and access it anywhere.</span>
+      <a href="/register" className="text-sm font-semibold text-[#C47D0A] hover:text-[#F5A623] whitespace-nowrap">Create account →</a>
+    </div>
+  ) : null
   const pct = () => {
     let s=0
     if(cv.pi?.name) s+=25; if(cv.edu?.some(e=>e.school)) s+=20
@@ -587,6 +593,7 @@ export default function CVBuilder() {
 
   return (
     <div className="min-h-[calc(100vh-68px)] bg-[#F7F3EB]">
+      <GuestBanner />
       <div className="bg-[#1A1A0F] px-4 md:px-10 py-5">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between gap-3 mb-3">

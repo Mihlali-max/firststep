@@ -72,7 +72,7 @@ export default function Coach() {
   const inputRef  = useRef<HTMLTextAreaElement>(null)
   const newMsgIdx = useRef(-1)
 
-  useEffect(() => { if (!user) { sessionStorage.setItem('redirectAfter', window.location.pathname); navigate('/register') } }, [user])
+  // Guest allowed — no redirect
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior:'smooth' }) }, [messages, loading])
 
   const send = async (text?: string) => {
