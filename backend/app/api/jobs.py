@@ -14,13 +14,16 @@ async def search_jobs(
     results_per_page: int = Query(default=20, le=50),
 ):
     """Search real SA jobs from Adzuna."""
+    from datetime import datetime, timedelta
+    max_age = (datetime.utcnow() - timedelta(days=90)).strftime("%Y-%m-%dT%H:%M:%SZ")
     params = {
-        "app_id":          settings.ADZUNA_APP_ID,
-        "app_key":         settings.ADZUNA_APP_KEY,
+        "app_id":           settings.ADZUNA_APP_ID,
+        "app_key":          settings.ADZUNA_APP_KEY,
         "results_per_page": results_per_page,
-        "what":            q,
-        "content-type":    "application/json",
-        "sort_by":         "date",
+        "what":             q,
+        "content-type":     "application/json",
+        "sort_by":          "date",
+        "max_days_old":     90,
     }
 
     # Map province to Adzuna location
