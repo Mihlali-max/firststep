@@ -8,7 +8,7 @@ const FEATURES = [
   { icon:'⭐', title:'AI Career Coach', desc:'Chat with an AI that understands the SA job market. Interview prep, job advice in English, isiXhosa, or Zulu.', to:'/coach' },
   { icon:'📄', title:'CV Builder', desc:'No blank pages. We ask simple questions and build your CV — even with zero work experience. Volunteering counts.', to:'/cv' },
   { icon:'🔍', title:'Learnership Finder', desc:'Browse SETA learnerships, YES Programme, and entry-level jobs — filtered for no-experience roles.', to:'/learnerships' },
-  { icon:'📚', title:'Skills Micro-courses', desc:'Short lessons on cover letters, interview skills, and workplace basics for first-time job seekers.', to:'/' },
+  { icon:'🎤', title:'Interview Prep', desc:'Practice real SA interview questions with AI feedback. Build confidence before the real thing — free.', to:'/interview' },
   { icon:'✅', title:'LAP Programme Checker', desc:'Search active Labour Activation Programme opportunities from the Dept. of Employment & Labour — live.', to:'/lap' },
   { icon:'👥', title:'Community & Support', desc:'Connect with others. Share advice, celebrate wins, and get peer support from job seekers across SA.', to:'/' },
 ]
