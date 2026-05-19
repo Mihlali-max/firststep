@@ -31,7 +31,7 @@ const FALLBACK: Job[] = [
 const PROVINCES = ['All Provinces','Western Cape','Gauteng','KwaZulu-Natal','Eastern Cape','Limpopo','Mpumalanga','North West','Free State','Northern Cape']
 
 const QUERIES = [
-  { label:'All opportunities',    q:'learnership OR internship OR graduate programme' },
+  { label:'All opportunities',    q:'learnership internship graduate' },
   { label:'Learnerships',         q:'learnership programme' },
   { label:'Graduate programmes',  q:'graduate programme trainee' },
   { label:'Internships',          q:'internship student graduate' },
