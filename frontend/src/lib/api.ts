@@ -44,13 +44,13 @@ api.interceptors.response.use(
         original.headers.Authorization = `Bearer ${data.access_token}`
         return api(original)
       } catch {
-        localStorage.removeItem('firststep-auth')
         const raw = localStorage.getItem('firststep-auth')
         const wasLoggedIn = raw && JSON.parse(raw)?.state?.user
         if (wasLoggedIn) {
           localStorage.removeItem('firststep-auth')
           window.location.href = '/login'
         }
+        return Promise.reject(error)
       }
     }
     return Promise.reject(error)

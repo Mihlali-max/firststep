@@ -96,8 +96,11 @@ export default function Coach() {
       }
       setMessages(m => [...m, { role:'assistant', content: res.data.reply }])
       if (!sessionId && res.data.session_id) setSessionId(res.data.session_id)
-    } catch {
-      setMessages(m => [...m, { role:'assistant', content:"Eish, something went wrong on my end. Try again in a moment!" }])
+    } catch(err: any) {
+      const msg = err?.response?.status === 401
+        ? "To chat with the AI Coach you need a free account. [Create one here](/register) — it takes 30 seconds."
+        : "Eish, something went wrong on my end. Try again in a moment!"
+      setMessages(m => [...m, { role:'assistant', content: msg }])
     } finally { setLoading(false) }
   }
 
