@@ -48,7 +48,7 @@ function PhoneLogin({ navigate }: { navigate: any }) {
     if (!phone.trim()) return
     setLoading(true); setErr('')
     try {
-      await api.post('/auth/phone/send-otp', { phone: phone.startsWith('+') ? phone : '+27' + phone.replace(/^0/, '') })
+      await fetch((import.meta.env.VITE_API_BASE||'')+'/api/auth/phone/send-otp', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone: phone.startsWith('+') ? phone : '+27' + phone.replace(/^0/, '')})})
       setSent(true)
     } catch { setErr('Failed to send OTP. Try again.') }
     setLoading(false)
@@ -58,7 +58,9 @@ function PhoneLogin({ navigate }: { navigate: any }) {
     if (!otp.trim()) return
     setLoading(true); setErr('')
     try {
-      const { data } = await api.post('/auth/phone/verify-otp', { phone: phone.startsWith('+') ? phone : '+27' + phone.replace(/^0/, ''), otp })
+      const _r = await fetch((import.meta.env.VITE_API_BASE||'')+'/api/auth/phone/verify-otp', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone: phone.startsWith('+') ? phone : '+27' + phone.replace(/^0/, ''), otp})})
+      if (!_r.ok) throw new Error('Invalid OTP')
+      const data = await _r.json()
       const s = { user: data.user, accessToken: data.access_token, refreshToken: data.refresh_token }
       useAuthStore.setState(s)
       localStorage.setItem('firststep-auth', JSON.stringify({ state: s, version: 0 }))
