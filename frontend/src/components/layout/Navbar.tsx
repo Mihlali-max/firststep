@@ -8,7 +8,7 @@ const LINKS = [
   { label: 'Home', to: '/' },
   { label: 'LAP Programmes', to: '/lap' },
   { label: 'CV Builder', to: '/cv' },
-  { label: 'Learnerships', to: '/learnerships' },
+  { label: 'Opportunities', to: '/learnerships' },
   { label: 'Contact', to: '/contact' },
 ]
 
