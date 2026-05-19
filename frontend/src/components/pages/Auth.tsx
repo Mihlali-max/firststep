@@ -63,6 +63,7 @@ export function Login() {
         </button>
       </form>
       <div className="my-5 flex items-center gap-3"><div className="flex-1 h-px bg-black/10"/><span className="text-xs text-black/30">or continue with</span><div className="flex-1 h-px bg-black/10"/></div>
+      <div style={{width:"100%"}}>
       <GoogleLogin
         onSuccess={async cred => {
           try {
@@ -76,7 +77,9 @@ export function Login() {
         width="400"
         text="signin_with"
         shape="rectangular"
+        width={document.querySelector('form')?.offsetWidth || 400}
       />
+      </div>
       <p className="text-center text-sm text-[#7A7260] mt-6">No account? <Link to="/register" className="text-[#C47D0A] font-medium hover:underline">Get started free</Link></p>
     </AuthShell>
   )
@@ -120,6 +123,7 @@ export function Register() {
         </button>
       </form>
       <div className="my-5 flex items-center gap-3"><div className="flex-1 h-px bg-black/10"/><span className="text-xs text-black/30">or continue with</span><div className="flex-1 h-px bg-black/10"/></div>
+      <div style={{width:"100%"}}>
       <GoogleLogin
         onSuccess={async cred => {
           try {
@@ -135,7 +139,9 @@ export function Register() {
         width="400"
         text="signup_with"
         shape="rectangular"
+        width={document.querySelector('form')?.offsetWidth || 400}
       />
+      </div>
       <p className="text-center text-sm text-[#7A7260] mt-6">Already have an account? <Link to="/login" className="text-[#C47D0A] font-medium hover:underline">Log in</Link></p>
     </AuthShell>
   )
