@@ -570,6 +570,7 @@ export default function CVBuilder() {
     if(cv.refs?.some(r=>r.name)) s+=15; return s
   }
   const save = async () => {
+    if (!user) { setSaved(true); setTimeout(()=>setSaved(false),2000); return }
     setSaving(true)
     try {
       await api.patch('/cv', {
