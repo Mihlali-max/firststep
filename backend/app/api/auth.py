@@ -109,3 +109,95 @@ async def google_auth(body: GoogleAuthRequest, db: AsyncSession = Depends(get_db
             refresh_token=create_refresh_token({"sub": user.id}),
             user=UserResponse.model_validate(user)
         )
+
+import random, time
+_otp_store: dict = {}
+
+class PhoneSendRequest(PM2):
+    phone: str
+
+class PhoneVerifyRequest(PM2):
+    phone: str
+    otp: str
+
+@router.post("/phone/send-otp")
+async def send_otp(body: PhoneSendRequest):
+    otp = str(random.randint(100000, 999999))
+    _otp_store[body.phone] = {"otp": otp, "expires": time.time() + 300}
+    try:
+        import africastalking
+        africastalking.initialize(settings.AT_USERNAME, settings.AT_API_KEY)
+        sms = africastalking.SMS
+        sms.send(f"Your FirstStep OTP is: {otp}. Valid for 5 minutes.", [body.phone])
+    except Exception as e:
+        print(f"SMS error: {e}")
+    return {"success": True, "message": "OTP sent"}
+
+@router.post("/phone/verify-otp")
+async def verify_otp(body: PhoneVerifyRequest, db: AsyncSession = Depends(get_db)):
+    stored = _otp_store.get(body.phone)
+    if not stored or stored["otp"] != body.otp or time.time() > stored["expires"]:
+        raise HTTPException(status_code=400, detail="Invalid or expired OTP")
+    del _otp_store[body.phone]
+    result = await db.execute(select(User).where(User.email == body.phone))
+    user = result.scalar_one_or_none()
+    if not user:
+        import uuid
+        user = User(
+            id=str(uuid.uuid4()), email=body.phone, full_name="FirstStep User",
+            hashed_password="", is_active=True, is_verified=True, totp_enabled=False
+        )
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
+    return TokenResponse(
+        access_token=create_access_token({"sub": user.id}),
+        refresh_token=create_refresh_token({"sub": user.id}),
+        user=UserResponse.model_validate(user)
+    )
+
+import random, time
+_otp_store: dict = {}
+
+class PhoneSendRequest(PM2):
+    phone: str
+
+class PhoneVerifyRequest(PM2):
+    phone: str
+    otp: str
+
+@router.post("/phone/send-otp")
+async def send_otp(body: PhoneSendRequest):
+    otp = str(random.randint(100000, 999999))
+    _otp_store[body.phone] = {"otp": otp, "expires": time.time() + 300}
+    try:
+        import africastalking
+        africastalking.initialize(settings.AT_USERNAME, settings.AT_API_KEY)
+        sms = africastalking.SMS
+        sms.send(f"Your FirstStep OTP is: {otp}. Valid for 5 minutes.", [body.phone])
+    except Exception as e:
+        print(f"SMS error: {e}")
+    return {"success": True, "message": "OTP sent"}
+
+@router.post("/phone/verify-otp")
+async def verify_otp(body: PhoneVerifyRequest, db: AsyncSession = Depends(get_db)):
+    stored = _otp_store.get(body.phone)
+    if not stored or stored["otp"] != body.otp or time.time() > stored["expires"]:
+        raise HTTPException(status_code=400, detail="Invalid or expired OTP")
+    del _otp_store[body.phone]
+    result = await db.execute(select(User).where(User.email == body.phone))
+    user = result.scalar_one_or_none()
+    if not user:
+        import uuid
+        user = User(
+            id=str(uuid.uuid4()), email=body.phone, full_name="FirstStep User",
+            hashed_password="", is_active=True, is_verified=True, totp_enabled=False
+        )
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
+    return TokenResponse(
+        access_token=create_access_token({"sub": user.id}),
+        refresh_token=create_refresh_token({"sub": user.id}),
+        user=UserResponse.model_validate(user)
+    )

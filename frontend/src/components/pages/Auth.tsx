@@ -36,6 +36,67 @@ function AuthShell({ title, sub, children }: { title: string; sub: string; child
   )
 }
 
+
+function PhoneLogin({ navigate }: { navigate: any }) {
+  const [phone, setPhone] = useState('')
+  const [otp, setOtp] = useState('')
+  const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [err, setErr] = useState('')
+
+  const sendOtp = async () => {
+    if (!phone.trim()) return
+    setLoading(true); setErr('')
+    try {
+      await api.post('/auth/phone/send-otp', { phone: phone.startsWith('+') ? phone : '+27' + phone.replace(/^0/, '') })
+      setSent(true)
+    } catch { setErr('Failed to send OTP. Try again.') }
+    setLoading(false)
+  }
+
+  const verifyOtp = async () => {
+    if (!otp.trim()) return
+    setLoading(true); setErr('')
+    try {
+      const { data } = await api.post('/auth/phone/verify-otp', { phone: phone.startsWith('+') ? phone : '+27' + phone.replace(/^0/, ''), otp })
+      const s = { user: data.user, accessToken: data.access_token, refreshToken: data.refresh_token }
+      useAuthStore.setState(s)
+      localStorage.setItem('firststep-auth', JSON.stringify({ state: s, version: 0 }))
+      navigate('/')
+    } catch { setErr('Invalid OTP. Try again.') }
+    setLoading(false)
+  }
+
+  return (
+    <div>
+      {!sent ? (
+        <div className="flex gap-2">
+          <input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="e.g. 0812345678"
+            className="flex-1 border border-black/15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#F5A623]"/>
+          <button onClick={sendOtp} disabled={loading}
+            className="bg-[#1A1A0F] text-white px-4 py-3 rounded-xl text-sm font-medium hover:bg-black transition-colors whitespace-nowrap">
+            {loading ? '...' : 'Send OTP'}
+          </button>
+        </div>
+      ) : (
+        <div>
+          <p className="text-xs text-black/50 mb-2">OTP sent to {phone}. Enter it below:</p>
+          <div className="flex gap-2">
+            <input value={otp} onChange={e=>setOtp(e.target.value)} placeholder="Enter 6-digit OTP"
+              className="flex-1 border border-black/15 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#F5A623]" maxLength={6}/>
+            <button onClick={verifyOtp} disabled={loading}
+              className="bg-[#F5A623] text-[#1A1A0F] px-4 py-3 rounded-xl text-sm font-bold hover:bg-[#e09620] transition-colors">
+              {loading ? '...' : 'Verify'}
+            </button>
+          </div>
+          <button onClick={()=>setSent(false)} className="text-xs text-black/40 mt-2 hover:text-black/60">← Change number</button>
+        </div>
+      )}
+      {err && <p className="text-red-500 text-xs mt-2">{err}</p>}
+    </div>
+  )
+}
+
 export function Login() {
   const [show, setShow] = useState(false)
   const [error, setError] = useState('')
@@ -80,6 +141,8 @@ export function Login() {
         width={document.querySelector('form')?.offsetWidth || 400}
       />
       </div>
+      <div className="my-4 flex items-center gap-3"><div className="flex-1 h-px bg-black/10"/><span className="text-xs text-black/30">or use phone number</span><div className="flex-1 h-px bg-black/10"/></div>
+      <PhoneLogin navigate={navigate} />
       <p className="text-center text-sm text-[#7A7260] mt-6">No account? <Link to="/register" className="text-[#C47D0A] font-medium hover:underline">Get started free</Link></p>
     </AuthShell>
   )

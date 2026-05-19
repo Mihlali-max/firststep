@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     ELEVENLABS_VOICE_ID: str = ""
     ANTHROPIC_API_KEY: str = ""
     RESEND_API_KEY: str = ""
+    AT_API_KEY: str = ""
+    AT_USERNAME: str = "sandbox"
     ADZUNA_APP_ID: str = ""
     ADZUNA_APP_KEY: str = ""
     ADZUNA_APP_ID: str = ""
