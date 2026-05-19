@@ -80,7 +80,7 @@ from pydantic import BaseModel as PM2
 class GoogleAuthRequest(PM2):
     token: str
 
-@router.post("/auth/google")
+@router.post("/google")
 async def google_auth(body: GoogleAuthRequest, db: AsyncSession = Depends(get_db)):
     import httpx
     async with httpx.AsyncClient() as client:
