@@ -62,6 +62,21 @@ export function Login() {
           {isLoading ? <Loader2 size={16} className="animate-spin"/> : <><span>Log in</span><ArrowRight size={15}/></>}
         </button>
       </form>
+      <div className="my-5 flex items-center gap-3"><div className="flex-1 h-px bg-black/10"/><span className="text-xs text-black/30">or continue with</span><div className="flex-1 h-px bg-black/10"/></div>
+      <GoogleLogin
+        onSuccess={async cred => {
+          try {
+            const axios = (await import('axios')).default
+            const { data } = await axios.post((import.meta.env.VITE_API_BASE||'')+'/api/auth/google', { token: cred.credential })
+            useAuthStore.setState({ user: data.user, accessToken: data.access_token, refreshToken: data.refresh_token })
+            navigate('/')
+          } catch(e) { alert('Google sign in failed. Try again.') }
+        }}
+        onError={() => alert('Google sign in failed')}
+        width="360"
+        text="signin_with"
+        shape="rectangular"
+      />
       <p className="text-center text-sm text-[#7A7260] mt-6">No account? <Link to="/register" className="text-[#C47D0A] font-medium hover:underline">Get started free</Link></p>
     </AuthShell>
   )
