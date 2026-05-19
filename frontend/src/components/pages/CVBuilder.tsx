@@ -825,6 +825,12 @@ export default function CVBuilder() {
                 <ChevronLeft size={15}/> Back
               </button>
               <div className="flex items-center gap-3">
+                <button onClick={async()=>{
+                    if(window.confirm('Reset your CV? This cannot be undone.')) {
+                      setCv(EMPTY); setOpts(DEF); setStep(0)
+                      if(user) await api.patch('/cv',{personal_info:{},education:[],skills:[],experience:[],references:[]}).catch(()=>{})
+                    }
+                  }} className="flex items-center gap-1.5 text-sm text-red-400 hover:text-red-600 mr-2">Reset CV</button>
                 <button onClick={save} disabled={saving} className="flex items-center gap-1.5 text-sm text-black/40 hover:text-[#1A1A0F]">
                   {saving?<Loader2 size={13} className="animate-spin"/>:saved?<Check size={13} className="text-green-500"/>:null}
                   {saved?'Saved!':'Save'}
