@@ -9,6 +9,7 @@ const LINKS = [
   { label: 'LAP Programmes', to: '/lap' },
   { label: 'CV Builder', to: '/cv' },
   { label: 'Opportunities', to: '/learnerships' },
+  { label: 'Interview Prep', to: '/interview' },
   { label: 'Contact', to: '/contact' },
 ]
 
