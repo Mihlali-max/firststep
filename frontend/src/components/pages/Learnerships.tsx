@@ -31,16 +31,20 @@ const FALLBACK: Job[] = [
 const PROVINCES = ['All Provinces','Western Cape','Gauteng','KwaZulu-Natal','Eastern Cape','Limpopo','Mpumalanga','North West','Free State','Northern Cape']
 
 const QUERIES = [
-  { label:'All opportunities', q:'learnership' },
-  { label:'Learnerships',      q:'learnership programme' },
-  { label:'YES Programme',     q:'YES programme youth' },
-  { label:'Internships',       q:'internship graduate' },
-  { label:'IT & Tech',         q:'IT learnership technology' },
-  { label:'Banking & Finance', q:'banking finance learnership' },
-  { label:'Retail & FMCG',     q:'retail learnership' },
-  { label:'Construction',      q:'construction learnership' },
-  { label:'Healthcare',        q:'healthcare learnership' },
-  { label:'Admin & Office',    q:'admin learnership office' },
+  { label:'All opportunities',    q:'learnership OR internship OR graduate programme' },
+  { label:'Learnerships',         q:'learnership programme' },
+  { label:'Graduate programmes',  q:'graduate programme trainee' },
+  { label:'Internships',          q:'internship student graduate' },
+  { label:'YES Programme',        q:'YES programme youth employment' },
+  { label:'Bursaries',            q:'bursary scholarship student' },
+  { label:'IT & Tech',            q:'IT learnership technology graduate' },
+  { label:'Banking & Finance',    q:'banking finance learnership graduate' },
+  { label:'Retail & FMCG',        q:'retail learnership graduate' },
+  { label:'Construction',         q:'construction learnership artisan' },
+  { label:'Healthcare',           q:'healthcare learnership nursing' },
+  { label:'Admin & Office',       q:'admin learnership office graduate' },
+  { label:'Engineering',          q:'engineering graduate internship' },
+  { label:'Government',           q:'government graduate DPSA public sector' },
 ]
 
 function timeAgo(dateStr: string): string {
@@ -226,7 +230,7 @@ export default function Learnerships() {
             Find your <em className="not-italic text-[#F5A623]">opportunity.</em>
           </h1>
           <p className="text-white/45 text-sm font-light mb-7 max-w-lg">
-            Real-time SA job listings — learnerships, YES Programme, internships, and entry-level roles. Apply directly from FirstStep.
+            Real-time SA job listings — learnerships, graduate programmes, internships, bursaries, and YES Programme opportunities. For matric holders and graduates.
           </p>
 
           {/* Search */}
