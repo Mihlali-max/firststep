@@ -92,8 +92,15 @@ export default function Profile() {
             </h1>
             <p className="text-white/40 text-sm mt-0.5">{user?.email}</p>
           </div>
-          <div className="w-14 h-14 rounded-2xl bg-[#F5A623] flex items-center justify-center text-2xl font-bold text-[#1A1A0F]">
-            {user?.full_name?.[0]?.toUpperCase() || '?'}
+          <div className="relative group cursor-pointer" onClick={()=>document.getElementById('profile-photo-input')?.click()}>
+            {photo
+              ? <img src={photo} className="w-14 h-14 rounded-2xl object-cover"/>
+              : <div className="w-14 h-14 rounded-2xl bg-[#F5A623] flex items-center justify-center text-2xl font-bold text-[#1A1A0F]">{user?.full_name?.[0]?.toUpperCase() || '?'}</div>
+            }
+            <div className="absolute inset-0 bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span className="text-white text-xs font-medium">Change</span>
+            </div>
+            <input id="profile-photo-input" type="file" accept="image/*" className="hidden" onChange={handleProfilePhoto}/>
           </div>
         </div>
       </div>
