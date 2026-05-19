@@ -63,7 +63,7 @@ export default function Home() {
           <div className="inline-flex items-center gap-2 text-[#F5A623] text-[11px] font-medium tracking-[3px] uppercase bg-[#F5A623]/12 border border-[#F5A623]/25 px-3 py-1.5 rounded-full mb-5"
             style={{ animation: 'fadeup .8s cubic-bezier(.16,1,.3,1) .2s both' }}>
             <span className="w-1.5 h-1.5 rounded-full bg-[#F5A623]" />
-            For South African Youth
+            For SA Youth &amp; Graduates
           </div>
 
           <h1 className="font-display font-bold leading-[1.05] tracking-tight text-[#FFFDF7] mb-5"
@@ -84,7 +84,7 @@ export default function Home() {
 
           <p className="text-[#FFFDF7]/65 font-light text-base leading-relaxed max-w-md mb-9"
             style={{ animation: 'fadeup .8s cubic-bezier(.16,1,.3,1) .7s both' }}>
-            Build your CV, find learnerships, check government programmes, and get coached by AI — completely free. Built for first-time job seekers in SA.
+            Build your CV, find learnerships, graduate programmes, internships and bursaries — coached by AI, completely free. For matric holders and graduates across SA.
           </p>
 
           <div className="flex gap-3 flex-wrap mb-14" style={{ animation: 'fadeup .8s cubic-bezier(.16,1,.3,1) .9s both' }}>
