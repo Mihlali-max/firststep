@@ -14,7 +14,7 @@ You know SA learnerships, SETAs, YES Programme, LAP, UIF, and entry-level jobs w
 Be warm, practical, and encouraging. Keep responses concise."""
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat(body: ChatRequest, user: User = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
+async def chat(body: ChatRequest, db: AsyncSession = Depends(get_db), user: User = Depends(get_current_user)):
     session = None
     if body.session_id:
         result = await db.execute(select(ChatSession).where(ChatSession.id == body.session_id, ChatSession.user_id == user.id))

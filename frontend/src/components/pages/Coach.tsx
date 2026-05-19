@@ -84,7 +84,16 @@ export default function Coach() {
     setLoading(true)
     if (inputRef.current) { inputRef.current.style.height = 'auto' }
     try {
-      const res = await api.post('/coach/chat', { message: msg, session_id: sessionId })
+      let res
+      try {
+        res = await api.post('/coach/chat', { message: msg, session_id: sessionId })
+      } catch(err: any) {
+        if (err?.response?.status === 401) {
+          const authMsg = { id: Date.now()+1, role:'assistant' as const, content:'To chat with the AI Coach you need a free account. [Create one here](/register) — it takes 30 seconds.' }
+          setMsgs(m => [...m, authMsg]); setLoading(false); return
+        }
+        throw err
+      }
       setMessages(m => [...m, { role:'assistant', content: res.data.reply }])
       if (!sessionId && res.data.session_id) setSessionId(res.data.session_id)
     } catch {
