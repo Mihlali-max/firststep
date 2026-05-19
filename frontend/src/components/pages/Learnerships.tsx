@@ -186,7 +186,7 @@ export default function Learnerships() {
     const timer = setTimeout(async () => {
       setLoading(true)
       try {
-        let url = `${import.meta.env.VITE_API_BASE || ''}/api/jobs?q=${encodeURIComponent(q)}&page=${page}&results_per_page=20`
+        const cleanQ = q + (q === 'learnership' ? ' -senior -manager -director' : ''); let url = `${import.meta.env.VITE_API_BASE || ''}/api/jobs?q=${encodeURIComponent(cleanQ)}&page=${page}&results_per_page=20`
         if (province !== 'All Provinces') url += `&province=${encodeURIComponent(province)}`
         const res = await fetch(url)
         const data = await res.json()
