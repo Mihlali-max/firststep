@@ -231,19 +231,28 @@ async def forgot_password(body: ForgotPasswordRequest, db: AsyncSession = Depend
     _reset_tokens[token] = {"user_id": user.id, "expires": time.time() + 3600}
     reset_url = f"https://firststep-frontend-sqyb.onrender.com/reset-password?token={token}"
     try:
-        from app.services.email_service import send_email
-        await send_email(
-            to=user.email,
-            subject="Reset your FirstStep password",
-            html=f"""<div style="font-family:sans-serif;max-width:480px;margin:0 auto">
+        import resend as _resend
+        from resend import Emails as _Emails
+        from app.core.config import settings as _settings; _resend.api_key = _settings.RESEND_API_KEY
+        _Emails.send({
+            "from": "FirstStep <onboarding@resend.dev>",
+            "to": user.email,
+            "subject": "Reset your FirstStep password",
+            "html": f'''<div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px">
+<div style="background:#1A1A0F;border-radius:12px;padding:20px;text-align:center;margin-bottom:20px">
+<span style="font-size:22px;font-weight:900;color:#FFFDF7">First<span style="color:#F5A623">Step</span></span>
+</div>
 <h2 style="color:#1A1A0F">Reset your password</h2>
-<p>Click the button below to reset your FirstStep password. This link expires in 1 hour.</p>
-<a href="{reset_url}" style="display:inline-block;background:#F5A623;color:#1A1A0F;font-weight:bold;padding:12px 24px;border-radius:8px;text-decoration:none">Reset password</a>
-<p style="color:#999;font-size:12px;margin-top:24px">If you didn't request this, ignore this email.</p>
-</div>"""
-        )
+<p style="color:#6B7280">Click the button below to reset your FirstStep password. This link expires in 1 hour.</p>
+<div style="text-align:center;margin:24px 0">
+<a href="{reset_url}" style="display:inline-block;background:#F5A623;color:#1A1A0F;font-weight:bold;padding:14px 28px;border-radius:10px;text-decoration:none;font-size:15px">Reset password →</a>
+</div>
+<p style="color:#9CA3AF;font-size:12px">If you didn't request this, ignore this email. Your password won't change.</p>
+</div>''',
+        })
     except Exception as e:
-        print(f"Reset email error: {e}")
+        print(f"Reset email error: {e}", flush=True)
+        import traceback; traceback.print_exc()
     return {"success": True}
 
 @router.post("/reset-password")
