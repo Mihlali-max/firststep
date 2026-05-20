@@ -10,7 +10,6 @@ const LINKS = [
   { label: 'CV Builder', to: '/cv' },
   { label: 'Opportunities', to: '/learnerships' },
   { label: 'Interview Prep', to: '/interview' },
-  { label: 'For Recruiters', to: '/recruiters' },
   { label: 'Contact', to: '/contact' },
 ]
 
@@ -71,6 +70,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
+              <a href="/recruiters" className="hidden md:block text-sm font-medium text-black/50 hover:text-[#1A1A0F] transition-colors px-3 py-2">For Employers</a>
               <Link to="/login" className="flex items-center gap-1.5 text-sm text-[#1A1A0F] px-3 py-2 rounded-lg hover:bg-[#F7F3EB] transition-colors"><User size={14} />Log in</Link>
               <div className="w-px h-5 bg-[#1A1A0F]/10" />
               <Link to="/register" className="btn-amber flex items-center gap-2 text-sm !py-2 !px-4">Get started <ArrowRight size={13} /></Link>
