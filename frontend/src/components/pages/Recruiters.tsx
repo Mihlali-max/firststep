@@ -252,6 +252,7 @@ export default function Recruiters() {
                 <textarea value={form.message} onChange={e=>setForm(f=>({...f,message:e.target.value}))}
                   placeholder="e.g. We're looking to post 3 retail learnerships in Cape Town and Johannesburg..."
                   rows={3}
+                  style={{color:"#1A1A0F",background:"white"}}
                   className="w-full bg-white/6 border border-white/10 rounded-xl px-4 py-3 text-[#FFFDF7] text-sm placeholder:text-white/25 outline-none focus:border-[#F5A623]/50 resize-none"/>
               </div>
               <button onClick={submit} disabled={loading || !form.company || !form.email}
