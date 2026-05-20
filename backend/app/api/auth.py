@@ -77,43 +77,6 @@ async def refresh_token(body: RefreshBody, db: AsyncSession = Depends(get_db)):
     }
 
 from pydantic import BaseModel as PM2
-class GoogleAuthRequest(PM2):
-    token: str = ''
-    email: str = ''
-    name: str = ''
-
-@router.post("/google")
-async def google_auth(body: GoogleAuthRequest, db: AsyncSession = Depends(get_db)):
-    import httpx
-    async with httpx.AsyncClient() as client:
-        r = await client.get(f"https://oauth2.googleapis.com/tokeninfo?id_token={body.token}")
-        if r.status_code != 200:
-            raise HTTPException(status_code=400, detail="Invalid Google token")
-        info = r.json()
-        email = info.get("email")
-        name = info.get("name", email)
-        if not email:
-            raise HTTPException(status_code=400, detail="No email from Google")
-        result = await db.execute(select(User).where(User.email == email))
-        user = result.scalar_one_or_none()
-        if not user:
-            import uuid
-            user = User(
-                id=str(uuid.uuid4()), email=email, full_name=name,
-                hashed_password="", is_active=True, is_verified=True,
-                totp_enabled=False
-            )
-            db.add(user)
-            await db.commit()
-            await db.refresh(user)
-        return TokenResponse(
-            access_token=create_access_token({"sub": user.id}),
-            refresh_token=create_refresh_token({"sub": user.id}),
-            user=UserResponse.model_validate(user)
-        )
-
-import random, time
-_otp_store: dict = {}
 
 class PhoneSendRequest(PM2):
     phone: str
@@ -213,7 +176,37 @@ async def debug_otp(phone: str):
 from pydantic import BaseModel as PM2
 
 class GoogleAuthRequest(PM2):
-    token: str = ''
-    email: str = ''
-    name: str = ''
+    token: str = ""
+    email: str = ""
+    name: str = ""
 
+@router.post("/google")
+async def google_auth(body: GoogleAuthRequest, db: AsyncSession = Depends(get_db)):
+    import httpx as _httpx
+    if body.token:
+        async with _httpx.AsyncClient() as client:
+            r = await client.get(f"https://oauth2.googleapis.com/tokeninfo?id_token={body.token}")
+            if r.status_code == 200:
+                info = r.json()
+                body.email = info.get("email", body.email)
+                body.name = info.get("name", body.name or body.email)
+    email = body.email
+    name = body.name or email
+    if not email:
+        raise HTTPException(status_code=400, detail="No email from Google")
+        result = await db.execute(select(User).where(User.email == email))
+        user = result.scalar_one_or_none()
+        if not user:
+            import uuid
+            user = User(
+                id=str(uuid.uuid4()), email=email, full_name=name,
+                hashed_password="", is_active=True, is_verified=True, totp_enabled=False
+            )
+            db.add(user)
+            await db.commit()
+            await db.refresh(user)
+        return TokenResponse(
+            access_token=create_access_token({"sub": user.id}),
+            refresh_token=create_refresh_token({"sub": user.id}),
+            user=UserResponse.model_validate(user)
+        )
