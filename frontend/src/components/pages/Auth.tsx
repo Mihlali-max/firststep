@@ -143,8 +143,6 @@ export function Login() {
         width={document.querySelector('form')?.offsetWidth || 400}
       />
       </div>
-      <div className="my-4 flex items-center gap-3"><div className="flex-1 h-px bg-black/10"/><span className="text-xs text-black/30">or use phone number</span><div className="flex-1 h-px bg-black/10"/></div>
-      <PhoneLogin navigate={navigate} />
       <p className="text-center text-sm text-[#7A7260] mt-6">No account? <Link to="/register" className="text-[#C47D0A] font-medium hover:underline">Get started free</Link></p>
     </AuthShell>
   )
