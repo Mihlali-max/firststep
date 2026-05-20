@@ -78,7 +78,9 @@ async def refresh_token(body: RefreshBody, db: AsyncSession = Depends(get_db)):
 
 from pydantic import BaseModel as PM2
 class GoogleAuthRequest(PM2):
-    token: str
+    token: str = ''
+    email: str = ''
+    name: str = ''
 
 @router.post("/google")
 async def google_auth(body: GoogleAuthRequest, db: AsyncSession = Depends(get_db)):
@@ -207,3 +209,11 @@ async def verify_otp(body: PhoneVerifyRequest, db: AsyncSession = Depends(get_db
 async def debug_otp(phone: str):
     stored = _otp_store.get(phone)
     return {"otp": stored.get("otp") if stored else "not found", "keys": list(_otp_store.keys())}
+
+from pydantic import BaseModel as PM2
+
+class GoogleAuthRequest(PM2):
+    token: str = ''
+    email: str = ''
+    name: str = ''
+
