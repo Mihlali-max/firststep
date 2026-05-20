@@ -210,3 +210,53 @@ async def google_auth(body: GoogleAuthRequest, db: AsyncSession = Depends(get_db
             refresh_token=create_refresh_token({"sub": user.id}),
             user=UserResponse.model_validate(user)
         )
+
+import secrets
+_reset_tokens: dict = {}
+
+class ForgotPasswordRequest(PM2):
+    email: str
+
+class ResetPasswordRequest(PM2):
+    token: str
+    new_password: str
+
+@router.post("/forgot-password")
+async def forgot_password(body: ForgotPasswordRequest, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(User).where(User.email == body.email))
+    user = result.scalar_one_or_none()
+    if not user:
+        return {"success": True}  # Don't reveal if email exists
+    token = secrets.token_urlsafe(32)
+    _reset_tokens[token] = {"user_id": user.id, "expires": time.time() + 3600}
+    reset_url = f"https://firststep-frontend-sqyb.onrender.com/reset-password?token={token}"
+    try:
+        from app.services.email_service import send_email
+        await send_email(
+            to=user.email,
+            subject="Reset your FirstStep password",
+            html=f"""<div style="font-family:sans-serif;max-width:480px;margin:0 auto">
+<h2 style="color:#1A1A0F">Reset your password</h2>
+<p>Click the button below to reset your FirstStep password. This link expires in 1 hour.</p>
+<a href="{reset_url}" style="display:inline-block;background:#F5A623;color:#1A1A0F;font-weight:bold;padding:12px 24px;border-radius:8px;text-decoration:none">Reset password</a>
+<p style="color:#999;font-size:12px;margin-top:24px">If you didn't request this, ignore this email.</p>
+</div>"""
+        )
+    except Exception as e:
+        print(f"Reset email error: {e}")
+    return {"success": True}
+
+@router.post("/reset-password")
+async def reset_password(body: ResetPasswordRequest, db: AsyncSession = Depends(get_db)):
+    stored = _reset_tokens.get(body.token)
+    if not stored or time.time() > stored["expires"]:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset link")
+    del _reset_tokens[body.token]
+    result = await db.execute(select(User).where(User.id == stored["user_id"]))
+    user = result.scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=400, detail="User not found")
+    from app.core.security import hash_password
+    user.hashed_password = hash_password(body.new_password)
+    await db.commit()
+    return {"success": True}

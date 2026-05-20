@@ -165,6 +165,7 @@ export function Login() {
       </form>
       <div className="my-5 flex items-center gap-3"><div className="flex-1 h-px bg-black/10"/><span className="text-xs text-black/30">or continue with</span><div className="flex-1 h-px bg-black/10"/></div>
       <GoogleBtn navigate={navigate} />
+      <p className="text-center text-sm mt-3"><a href="/forgot-password" className="text-black/40 hover:text-[#C47D0A] text-sm">Forgot password?</a></p>
       <p className="text-center text-sm text-[#7A7260] mt-6">No account? <Link to="/register" className="text-[#C47D0A] font-medium hover:underline">Get started free</Link></p>
     </AuthShell>
   )

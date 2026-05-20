@@ -12,6 +12,8 @@ import Learnerships from './components/pages/Learnerships'
 import CVBuilder from './components/pages/CVBuilder'
 import CVUpload from './components/pages/CVUpload'
 import About from './components/pages/About'
+import ForgotPassword from './components/pages/ForgotPassword'
+import ResetPassword from './components/pages/ResetPassword'
 import Recruiters from './components/pages/Recruiters'
 import InterviewPrep from './components/pages/InterviewPrep'
 import Privacy from './components/pages/Privacy'
@@ -75,6 +77,8 @@ export default function App() {
           <Route path="/coach" element={<Coach />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/recruiters" element={<Recruiters />} />
           <Route path="/interview" element={<InterviewPrep />} />
           <Route path="/privacy" element={<Privacy />} />
