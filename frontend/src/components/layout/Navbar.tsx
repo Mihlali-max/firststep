@@ -10,6 +10,7 @@ const LINKS = [
   { label: 'CV Builder', to: '/cv' },
   { label: 'Opportunities', to: '/learnerships' },
   { label: 'Interview Prep', to: '/interview' },
+  { label: 'For Recruiters', to: '/recruiters' },
   { label: 'Contact', to: '/contact' },
 ]
 
