@@ -112,7 +112,7 @@ export default function Coach() {
   const firstName = user?.full_name?.split(' ')[0] || 'there'
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-68px)]" style={{background:'#0F0F0A'}}>
+    <div className="flex flex-col h-[calc(100dvh-68px)] pb-safe" style={{background:'#0F0F0A'}}>
 
       {/* ── TOP BAR ── */}
       <div className="flex items-center justify-between px-4 md:px-8 py-4 border-b flex-shrink-0" style={{borderColor:'rgba(255,255,255,0.08)',background:'#141410'}}>

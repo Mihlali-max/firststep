@@ -201,3 +201,9 @@ async def verify_otp(body: PhoneVerifyRequest, db: AsyncSession = Depends(get_db
         refresh_token=create_refresh_token({"sub": user.id}),
         user=UserResponse.model_validate(user)
     )
+
+
+@router.get("/phone/debug-otp/{phone}")
+async def debug_otp(phone: str):
+    stored = _otp_store.get(phone)
+    return {"otp": stored.get("otp") if stored else "not found", "keys": list(_otp_store.keys())}

@@ -98,7 +98,7 @@ export default function Home() {
 
           <div className="flex gap-7 border-t border-[#FFFDF7]/10 pt-7"
             style={{ animation: 'fadeup .8s cubic-bezier(.16,1,.3,1) 1.1s both' }}>
-            {[['46%','Youth unemployment in SA'],['4.8M','Young people need first job'],['Free','Always, for job seekers']].map(([n,l]) => (
+            {[['46%','Youth unemployment'],['4.8M','Need their first job'],['Free','Always, for you']].map(([n,l]) => (
               <div key={l}>
                 <div className="font-display text-3xl font-bold text-[#FFFDF7] tracking-tight">{n}</div>
                 <div className="text-xs font-light text-[#FFFDF7]/50 mt-1">{l}</div>
@@ -212,7 +212,7 @@ export default function Home() {
       <section className="bg-[#F5A623] py-20 px-8 md:px-12 flex flex-wrap items-center justify-between gap-8">
         <div className="reveal">
           <p className="text-[#1A1A0F]/60 text-xs font-medium tracking-[2px] uppercase mb-2">Ready to start?</p>
-          <h2 className="font-display text-4xl font-bold text-[#1A1A0F] tracking-tight leading-tight">Your first job is<br/>closer than you think.</h2>
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-[#1A1A0F] tracking-tight leading-tight">Your first job is<br/>closer than you think.</h2>
         </div>
         <Link to="/register" className="magnetic ripple btn-ink flex items-center gap-2 whitespace-nowrap reveal">
           Create your free profile <ArrowRight size={16} />
