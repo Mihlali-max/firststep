@@ -218,13 +218,13 @@ export default function Recruiters() {
                   <label className="text-xs font-medium text-[#FFFDF7]/40 uppercase tracking-widest block mb-2">Company name *</label>
                   <input value={form.company} onChange={e=>setForm(f=>({...f,company:e.target.value}))}
                     placeholder="e.g. Shoprite Holdings"
-                    className="w-full bg-white/6 border border-white/10 rounded-xl px-4 py-3 text-[#FFFDF7] text-sm placeholder:text-white/25 outline-none focus:border-[#F5A623]/50"/>
+                    className="w-full bg-white border border-white/20 rounded-xl px-4 py-3 text-[#1A1A0F] text-sm placeholder:text-black/30 outline-none focus:border-[#F5A623]"/>
                 </div>
                 <div>
                   <label className="text-xs font-medium text-[#FFFDF7]/40 uppercase tracking-widest block mb-2">Work email *</label>
                   <input value={form.email} onChange={e=>setForm(f=>({...f,email:e.target.value}))}
                     placeholder="hr@company.co.za" type="email"
-                    className="w-full bg-white/6 border border-white/10 rounded-xl px-4 py-3 text-[#FFFDF7] text-sm placeholder:text-white/25 outline-none focus:border-[#F5A623]/50"/>
+                    className="w-full bg-white border border-white/20 rounded-xl px-4 py-3 text-[#1A1A0F] text-sm placeholder:text-black/30 outline-none focus:border-[#F5A623]"/>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -232,12 +232,12 @@ export default function Recruiters() {
                   <label className="text-xs font-medium text-[#FFFDF7]/40 uppercase tracking-widest block mb-2">Phone number</label>
                   <input value={form.phone} onChange={e=>setForm(f=>({...f,phone:e.target.value}))}
                     placeholder="+27 82 000 0000"
-                    className="w-full bg-white/6 border border-white/10 rounded-xl px-4 py-3 text-[#FFFDF7] text-sm placeholder:text-white/25 outline-none focus:border-[#F5A623]/50"/>
+                    className="w-full bg-white border border-white/20 rounded-xl px-4 py-3 text-[#1A1A0F] text-sm placeholder:text-black/30 outline-none focus:border-[#F5A623]"/>
                 </div>
                 <div>
                   <label className="text-xs font-medium text-[#FFFDF7]/40 uppercase tracking-widest block mb-2">Company size</label>
                   <select value={form.size} onChange={e=>setForm(f=>({...f,size:e.target.value}))}
-                    className="w-full bg-white/6 border border-white/10 rounded-xl px-4 py-3 text-[#FFFDF7] text-sm outline-none focus:border-[#F5A623]/50">
+                    className="w-full bg-white border border-white/20 rounded-xl px-4 py-3 text-[#1A1A0F] text-sm outline-none focus:border-[#F5A623]">
                     <option value="" className="bg-[#1A1A0F]">Select...</option>
                     <option value="1-10" className="bg-[#1A1A0F]">1–10 employees</option>
                     <option value="11-50" className="bg-[#1A1A0F]">11–50 employees</option>
